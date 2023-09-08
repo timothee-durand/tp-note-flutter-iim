@@ -29,7 +29,8 @@ class RegisterPageState extends State<RegisterPage> {
 
   Future<void> registerUser(String userName, String password)  async {
     await _userRepository.insertUser(User(name: userName, userPassword: password, userId: await getNextUserId()));
-    print(await _userRepository.getUserList());
+    if(!context.mounted) return;
+    Navigator.pushNamed(context, "/login");
   }
 
   @override

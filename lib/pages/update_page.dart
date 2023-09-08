@@ -36,9 +36,15 @@ class UpdatePageState extends State<UpdatePage> {
   Future<void> updateUser(int id, String userName, String password) async {
     await _userRepository
         .updateUser(User(id: id, name: userName, userPassword: password));
+    final updatedUser = await _userRepository.getUser(id);
     if (!context.mounted) return;
-    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-        content: Text("User updated"), backgroundColor: Colors.green));
+    if(updatedUser == null)  {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text("Error"), backgroundColor: Colors.red));
+      return;
+    }
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text("User updated : ${updatedUser!.toString()}"), backgroundColor: Colors.green));
     Navigator.pushNamed(context, '/login');
   }
 
