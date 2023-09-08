@@ -1,6 +1,6 @@
-# tp_note_flutter
+# IIM  - TP NOTE FLUTTER
 
-A new Flutter project.
+A flutter project for the IIM school.
 
 ## Getting Started
 
