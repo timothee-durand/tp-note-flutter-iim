@@ -37,9 +37,22 @@ class UserRepository {
     return data!.map((e) => User.fromMap(e)).toList();
   }
 
+  Future<int> countUsers() async {
+    var connection = await database;
+    return Sqflite.firstIntValue(await connection!.rawQuery('SELECT COUNT(*) FROM $table')) ?? 0;
+  }
+
   Future<User?> getUser(int userId) async {
     var connection = await database;
     final data = await connection?.query(table, where: 'id = ?', whereArgs: [userId]);
+    if(data!.isNotEmpty) {
+      return User.fromMap(data.first);
+    }
+  }
+
+  Future<User?> findUser(String name, String password) async {
+    var connection = await database;
+    final data = await connection?.query(table, where: 'name = ? AND userPassword = ?', whereArgs: [name, password]);
     if(data!.isNotEmpty) {
       return User.fromMap(data.first);
     }

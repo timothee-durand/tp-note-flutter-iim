@@ -5,7 +5,7 @@ import 'package:sqflite/sqflite.dart';
 class DatabaseConnection {
   Future<Database> setDatabase() async {
     var directory = await getApplicationDocumentsDirectory();
-    var path = join(directory.path, 'users');
+    var path = join(directory.path, 'db');
     var database = await openDatabase(path, version: 1, onCreate: _createDatabase);
     return database;
   }
@@ -14,7 +14,8 @@ class DatabaseConnection {
     String sql = """CREATE TABLE users (
         id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
         name TEXT NOT NULL,
-        userId INTEGER NOT NULL
+        userId INTEGER NOT NULL,
+        userPassword TEXT NOT NULL
       );""";
     await database.execute(sql);
   }

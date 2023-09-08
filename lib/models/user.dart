@@ -2,24 +2,28 @@ import 'dart:convert';
 
 class User {
   int? id;
-  String? name;
+  String name;
   int? userId;
+  String userPassword;
 
   User({
     this.id,
-    this.name,
+    required this.name,
     this.userId,
+    required this.userPassword,
   });
 
   User copyWith({
     int? id,
     String? name,
     int? userId,
+    String? userPassword,
   }) {
     return User(
       id: id ?? this.id,
       name: name ?? this.name,
       userId: userId ?? this.userId,
+      userPassword: userPassword ?? this.userPassword,
     );
   }
 
@@ -35,6 +39,9 @@ class User {
     if (userId != null) {
       result.addAll({'userId': userId});
     }
+    if (userPassword != null) {
+      result.addAll({'userPassword': userPassword});
+    }
 
     return result;
   }
@@ -44,6 +51,7 @@ class User {
       id: map['id']?.toInt(),
       name: map['name'],
       userId: map['userId'],
+      userPassword: map['userPassword'],
     );
   }
 
@@ -60,11 +68,11 @@ class User {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is User && other.id == id && other.name == name && other.userId == userId;
+    return other is User && other.id == id && other.name == name && other.userId == userId && other.userPassword == userPassword;
   }
 
   @override
   int get hashCode {
-    return id.hashCode ^ name.hashCode ^ userId.hashCode;
+    return id.hashCode ^ name.hashCode ^ userId.hashCode ^ userPassword.hashCode;
   }
 }
